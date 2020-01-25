@@ -229,4 +229,24 @@
             android:layout_height="wrap_content" />
     </FrameLayout>
 
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        android:orientation="vertical">
+
+        <com.google.android.gms.ads.AdView
+            xmlns:ads="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/adView"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            ads:adSize="BANNER"
+            ads:adUnitId="ca-app-pub-9028512770259391/4527826155">
+            <!--ca-app-pub-9028512770259391/4527826155-->
+        </com.google.android.gms.ads.AdView>
+
+    </LinearLayout>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,9 +1,12 @@
 package com.example.popularnews;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.util.Pair;
 import androidx.core.view.ViewCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,6 +33,10 @@ import com.example.popularnews.api.ApiClient;
 import com.example.popularnews.api.ApiInterface;
 import com.example.popularnews.models.Article;
 import com.example.popularnews.models.News;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +45,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener{
+public class MainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, NavigationView.OnNavigationItemSelectedListener {
 
     public static final String API_KEY = "0b197a9a8f2c4370b8d9b4596b152d2e";
     private RecyclerView recyclerView;
@@ -53,10 +60,31 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     private TextView errorTitle, errorMessage;
     private Button btnRetry;
 
+    private DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle mToggle;
+    AdView mAdView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
+        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
+        mDrawerLayout.addDrawerListener(mToggle);
+        mToggle.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+        MobileAds.initialize(this,
+                "ca-app-pub-9028512770259391~6224051204");
+        //ca-app-pub-9028512770259391~6224051204
+
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
 
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
         swipeRefreshLayout.setOnRefreshListener(MainActivity.this);
@@ -77,6 +105,19 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         errorTitle = findViewById(R.id.errorTitle);
         errorMessage = findViewById(R.id.errorMessage);
         btnRetry = findViewById(R.id.retryBtn);
+    }
+
+
+
+    
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (mToggle.onOptionsItemSelected(item))
+        {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     public void LoadJson(final String keyword)
@@ -197,6 +238,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
+
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         final SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
         MenuItem searchMenuItem = menu.findItem(R.id.action_search);
@@ -231,6 +273,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         LoadJson("");
     }
 
+
     private void onLodingSwipeRefresh(final String keyword)
     {
         swipeRefreshLayout.post(
@@ -259,6 +302,58 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                 onLodingSwipeRefresh("");
             }
         });
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
+        switch (menuItem.getItemId())
+        {
+
+            case R.id.dashboard :
+                Intent intent1 = new Intent(MainActivity.this,MainActivity.class);
+                startActivity(intent1);
+
+                break;
+
+            case R.id.search :
+                Intent intent2 = new Intent(MainActivity.this,MainActivity.class);
+                startActivity(intent2);
+
+                break;
+
+            case R.id.events :
+                Intent intent3 = new Intent(MainActivity.this,MainActivity.class);
+                startActivity(intent3);
+
+                break;
+
+            case R.id.setting :
+                Intent intent4 = new Intent(MainActivity.this,MainActivity.class);
+                startActivity(intent4);
+
+                break;
+
+            case R.id.activities :
+                Intent intent5 = new Intent(MainActivity.this,MainActivity.class);
+                startActivity(intent5);
+                break;
+
+
+            case R.id.nav_share :
+                Intent intent6 = new Intent(MainActivity.this,MainActivity.class);
+                startActivity(intent6);
+                break;
+
+
+            case R.id.nav_send :
+                Intent intent7 = new Intent(MainActivity.this,MainActivity.class);
+                startActivity(intent7);
+                break;
+
+        }
+
+        return true;
     }
 
 }

@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
     tools:context=".MainActivity">
+
+
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/drawer"
+        >
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_layout"
@@ -45,7 +52,6 @@
             </androidx.recyclerview.widget.RecyclerView>
 
 
-
         </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>
@@ -54,4 +60,38 @@
 
     <include layout="@layout/error"/>
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        app:headerLayout="@layout/header"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        app:itemTextColor="@color/colorTextTitle"
+        app:itemIconTint="@color/colorTextTitle"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:menu="@menu/drawermenu"
+        ></com.google.android.material.navigation.NavigationView>
+        
+</androidx.drawerlayout.widget.DrawerLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        android:orientation="vertical">
+
+        <com.google.android.gms.ads.AdView
+            xmlns:ads="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/adView"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            ads:adSize="BANNER"
+            ads:adUnitId="ca-app-pub-9028512770259391/4527826155">
+            <!--ca-app-pub-9028512770259391/4527826155-->
+        </com.google.android.gms.ads.AdView>
+
+    </LinearLayout>
+
+</RelativeLayout>

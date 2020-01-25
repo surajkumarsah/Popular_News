@@ -21,6 +21,9 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.AppBarLayout.*;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -36,11 +39,22 @@ public class NewsDetailsActivity extends AppCompatActivity{
     private Toolbar toolbar;
     private String mUrl, mImg, mTitle, mDate, mSource, mAuthor;
 
+    AdView mAdView;
+
 
             @Override
             protected void onCreate(Bundle savedInstanceState) {
                 super.onCreate(savedInstanceState);
                 setContentView(R.layout.activity_news_details);
+
+
+                MobileAds.initialize(this,
+                        "ca-app-pub-9028512770259391~6224051204");
+
+                mAdView = findViewById(R.id.adView);
+                AdRequest adRequest = new AdRequest.Builder().build();
+                mAdView.loadAd(adRequest);
+
 
                 toolbar = findViewById(R.id.toolbar);
                 setSupportActionBar(toolbar);

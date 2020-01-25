@@ -42,4 +42,7 @@ dependencies {
 //Times Formater
     implementation 'org.ocpsoft.prettytime:prettytime:4.0.1.Final'
 
+    implementation 'com.google.android.gms:play-services-ads:18.2.0'
+
+
 }
